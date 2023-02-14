@@ -112,7 +112,7 @@ def getSignal(folder, doSmooth = True, nFrameForBaseline = 13, noiseThreshold = 
 
 
 
-def returnFrameOfInterestIndexes(data, timePdiff = 6, threshold = 400):
+def returnFrameOfInterestIndexes(data, timePdiff = 6, threshold = 400, nAdjacentFrame = 0):
     """
     function to return the index of frame of interest
     the current approach is to look at the difference in signal between the frame 'i' and the frame 
@@ -125,6 +125,10 @@ def returnFrameOfInterestIndexes(data, timePdiff = 6, threshold = 400):
 
     return a dictionary
     """
+#   assess arguements validity
+    if timePdiff < 0 or threshold < 0 or nAdjacentFrame < 0:
+        raise ValueError('negatvie value in argument where positive values only are accepted')
+
     # compute difference
     res = []
     for i in range(len(data) - timePdiff):
@@ -135,6 +139,13 @@ def returnFrameOfInterestIndexes(data, timePdiff = 6, threshold = 400):
 
     # check for which time point difference is bigger than threshold
     biggerThan = [i for i in range(len(res)) if res[i] > threshold]
+
+    # add adjacent frame if wanted
+    biggerThan = np.unique(np.array([j for i in biggerThan for j in range(i-nAdjacentFrame, i+nAdjacentFrame+1)]))
+    biggerThan = biggerThan.tolist()
+    biggerThan = [i for i in biggerThan if ((i >= 0 ) and (i <= (len(data) - 1)))]
+    #  biggerThan = biggerThan[(biggerThan >= 0 ) and (biggerThan <= (len(data) - 1))]
+    
     return biggerThan
 
 
