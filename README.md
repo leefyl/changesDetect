@@ -1,2 +1,2 @@
 # changesDetect
-give a set of frame, identify changes from frames to frames
+given a set of frames, identify and quantify changes in pixel from frames to frames
