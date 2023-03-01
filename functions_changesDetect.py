@@ -30,10 +30,11 @@ def getSignal(folder, doSmooth = True, nFrameForBaseline = 13, noiseThreshold = 
     
     return a numerical list
     """
+    import os
     from PIL import Image
     from PIL import ImageFilter
     import numpy as np
-
+    import warnings
     # get a list of all frame names in the right order!
     listFrame = os.listdir(folder)
     listFrame = ["frame" + str(i) + ".jpg" for i in range(len(listFrame))]
@@ -125,6 +126,7 @@ def returnFrameOfInterestIndexes(data, timePdiff = 6, threshold = 400, nAdjacent
 
     return a dictionary
     """
+    import numpy as np
 #   assess arguements validity
     if timePdiff < 0 or threshold < 0 or nAdjacentFrame < 0:
         raise ValueError('negatvie value in argument where positive values only are accepted')
