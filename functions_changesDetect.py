@@ -112,7 +112,7 @@ def getSignal(folder, doSmooth = True, nFrameForBaseline = 13, noiseThreshold = 
 
 
 
-def returnFrameOfInterestIndexes(data, timePdiff = 6, threshold = 400, nAdjacentFrame = 0):
+def returnFrameOfInterestIndexes(data, timePdiff = 6, threshold = 400, nAdjacentFrame = 6):
     """
     function to return the index of frame of interest
     the current approach is to look at the difference in signal between the frame 'i' and the frame 
